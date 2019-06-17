@@ -1,0 +1,60 @@
+class Node {
+    var value: Int
+    var next: Node?
+    weak var previous: Node?
+    
+    init(value: Int) {
+        self.value = value
+    }
+}
+
+
+class LinkedList {
+    var head: Node?
+    
+    func append(_ value: Int) {
+        if head == nil {
+            head = Node(value: value)
+        } else {
+            var lastNode = head
+            while(lastNode?.next != nil) {
+                lastNode = lastNode?.next
+            }
+            
+            if let lastNode = lastNode {
+                let newNode = Node(value: value)
+                lastNode.next = newNode
+                newNode.previous = lastNode
+            }
+        }
+    }
+    
+    func insertAtStart(_ value: Int) {
+        if head == nil {
+            head = Node(value: value)
+        } else {
+            let newNode = Node(value: value)
+            
+            head?.previous = newNode
+            newNode.next = head
+            head = newNode
+        }
+    }
+    
+    func printLL() {
+        var currNode = head
+        while(currNode != nil) {
+            print(currNode?.value)
+            currNode = currNode?.next
+        }
+    }
+}
+
+let ll = LinkedList()
+ll.append(10)
+ll.append(20)
+
+ll.printLL()
+
+ll.insertAtStart(6)
+ll.printLL()
