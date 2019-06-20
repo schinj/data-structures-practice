@@ -1,0 +1,55 @@
+class TrieNode {
+    var isLastNode: Bool = false
+    var children: [TrieNode]?
+    
+    func initialize() {
+        children = Array(repeating: TrieNode(), count: 26)
+    }
+}
+
+class Trie {
+    var root: TrieNode!
+    
+    func insertNode(key: String) {
+        var rootCrawl: TrieNode = root
+        
+        for char in key {
+            let index = Int((char.unicodeScalars.first?.value ?? 0) - (Character("a").unicodeScalars.first?.value ?? 0))
+            if rootCrawl.children?[index].children == nil {
+                rootCrawl.children?[index] = TrieNode()
+                rootCrawl.children?[index].initialize()
+            }
+            
+            rootCrawl = rootCrawl.children![index]
+        }
+        
+        rootCrawl.isLastNode = true
+    }
+    
+    func searchKey(_ key: String) {
+        var rootCrawl: TrieNode = root
+
+        for char in key {
+            let index = Int((char.unicodeScalars.first?.value ?? 0) - (Character("a").unicodeScalars.first?.value ?? 0))
+            if rootCrawl.children?[index] == nil {
+                print("Not exist")
+            } else {
+                rootCrawl = rootCrawl.children![index]
+            }
+        }
+        
+        if rootCrawl.isLastNode {
+            print("Key Found")
+        } else {
+            print("Not exist")
+        }
+    }
+}
+
+var trie = Trie()
+trie.root = TrieNode()
+trie.root.initialize()
+trie.insertNode(key: "hello")
+trie.insertNode(key: "hellobrother")
+
+trie.searchKey("hellobrother")
