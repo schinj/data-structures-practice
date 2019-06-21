@@ -1,0 +1,53 @@
+class TreeNode {
+    var value: Int!
+    var left: TreeNode?
+    var right: TreeNode?
+    
+    init(value: Int) {
+        self.value = value
+        left = nil
+        right = nil
+    }
+}
+
+class Tree {
+    var root: TreeNode!
+    
+    init(root: TreeNode) {
+        self.root = root
+    }
+    
+    func findMinHeight() {
+        print(calculateHeight(node: root))
+    }
+    
+    func calculateHeight(node: TreeNode?) -> Int {
+        if node == nil {
+            return 0
+        }
+        
+        if node?.left == nil && node?.right == nil {
+            return 1
+        }
+        
+        if node?.left == nil {
+            return 1 + calculateHeight(node: (node?.right)!)
+        }
+        
+        if node?.right == nil {
+            return 1 + calculateHeight(node: (node?.left)!)
+        }
+        
+        return min(calculateHeight(node: (node?.left)!), calculateHeight(node: (node?.right)!)) + 1
+    }
+}
+
+let root = TreeNode(value: 1)
+let treeClass = Tree(root: root)
+
+root.left = TreeNode(value: 2)
+root.right = TreeNode(value: 3)
+root.left?.left = TreeNode(value: 4)
+root.left?.right = TreeNode(value: 5)
+
+treeClass.findMinHeight()
