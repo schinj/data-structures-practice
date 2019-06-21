@@ -40,6 +40,33 @@ class Tree {
         
         return min(calculateHeight(node: (node?.left)!), calculateHeight(node: (node?.right)!)) + 1
     }
+    
+    func printLevelOrder() {
+        printLevelOrderForNode(root)
+    }
+    
+    func printLevelOrderForNode(_ node: TreeNode?) {
+        guard let node = node else {
+            return
+        }
+        
+        var queue: [TreeNode] = []
+        
+        queue.append(node)
+        
+        while !queue.isEmpty {
+            let element = queue.remove(at: 0)
+            print(element.value)
+            
+            if let left = element.left {
+                queue.append(left)
+            }
+            
+            if let right = element.right {
+                queue.append(right)
+            }
+        }
+    }
 }
 
 let root = TreeNode(value: 1)
@@ -50,4 +77,5 @@ root.right = TreeNode(value: 3)
 root.left?.left = TreeNode(value: 4)
 root.left?.right = TreeNode(value: 5)
 
-treeClass.findMinHeight()
+//treeClass.findMinHeight()
+treeClass.printLevelOrder()
