@@ -1,0 +1,113 @@
+class MinHeap {
+    var elements: [Int] = []
+    var maxCapacity: Int = 0
+    var currentCapacity: Int = 0
+    
+    init(maxCapacity: Int) {
+        self.maxCapacity = maxCapacity
+        self.elements = Array.init(repeating: 0, count: maxCapacity)
+    }
+    
+    private func parent(i: Int) -> Int {
+        return (i-1)/2
+    }
+    
+    private func leftChild(i: Int) -> Int {
+        return 2*i + 1
+    }
+    
+    private func rightChild(i: Int) -> Int {
+        return 2*i + 2
+    }
+    
+    func insertKey(value: Int) {
+        if currentCapacity == maxCapacity {
+            print("Overflow")
+            return
+        }
+        
+        currentCapacity += 1
+
+        var index = currentCapacity - 1
+        print("Inserting at index: \(index)")
+        elements.insert(value, at: index)
+
+        print("Starting heapify for index: \(index)")
+        
+        while index != 0 && elements[index] < elements[parent(i: index)] {
+            print("Need to swap \(index) with \(parent(i: index))", elements[index], elements[parent(i: index)])
+            swap(&elements[index], &elements[parent(i: index)])
+            index = parent(i: index)
+        }
+    }
+    
+    func heapify(at: Int) {
+        
+    }
+    
+    func printArr() {
+        print(elements)
+    }
+    
+    func decreaseKey(index: Int, newVal: Int) {
+        self.elements[index] = newVal
+        var index = index
+        while index != 0 && elements[index] < elements[parent(i: index)] {
+            print("Need to swap \(index) with \(parent(i: index))", elements[index], elements[parent(i: index)])
+            swap(&elements[index], &elements[parent(i: index)])
+            index = parent(i: index)
+        }
+    }
+    
+    func extractMin() -> Int {
+        if currentCapacity == 0 {
+            return -1
+        }
+        
+        let item = elements[0]
+        elements[0] = elements[currentCapacity-1]
+        elements[currentCapacity-1] = 0
+        currentCapacity -= 1
+        minHeapify(0)
+        
+        return item
+    }
+    
+    func minHeapify(_ index: Int) {
+        var minimum = index
+        
+        let r = rightChild(i: index)
+        if elements[index] > elements[r] && r < currentCapacity{
+            minimum = r
+        }
+        
+        let l = leftChild(i: index)
+        if elements[l] < elements[minimum] && l < currentCapacity {
+            minimum = l
+        }
+        
+        print("MinHeapify: next min \(minimum)")
+        
+        if minimum != index {
+            swap(&elements[minimum], &elements[index])
+            minHeapify(minimum)
+        }
+    }
+}
+
+let minHeap = MinHeap(maxCapacity: 10)
+minHeap.insertKey(value: 11)
+minHeap.printArr()
+minHeap.insertKey(value: 3)
+minHeap.printArr()
+minHeap.insertKey(value: 2)
+minHeap.printArr()
+minHeap.insertKey(value: 6)
+minHeap.printArr()
+minHeap.decreaseKey(index: 2, newVal: 1)
+minHeap.printArr()
+
+print(minHeap.extractMin())
+minHeap.printArr()
+
+
