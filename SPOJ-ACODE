@@ -1,0 +1,25 @@
+# your code goes here
+def numWays(s, size, mem):
+	if size == 0:
+		return 1
+	
+	start = len(s) - size
+	if s[start] == '0':
+		return 0
+		
+	if size in mem:
+		return mem[size]
+	
+	result = numWays(s, size-1, mem)
+	
+	if size >=2 and int(s[start:start+2]) <= 26:
+		result += numWays(s, size-2, mem)
+	
+	mem[size] = result
+	return result
+
+t = int(input())
+for t_itr in range(t):
+	s = str(input())
+	m = {}
+	print(numWays(s, len(s), m))
