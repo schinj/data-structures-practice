@@ -1,0 +1,17 @@
+
+func findCatalan(_ n: Int) {
+    var catalanArr = Array(repeating: 0, count: n+1)
+    catalanArr[0] = 1
+    
+    for i in 1..<n {
+        catalanArr[i] = 0
+        
+        for j in 0..<i {
+            catalanArr[i] += catalanArr[j] * catalanArr[i-j-1]
+        }
+    }
+    
+    print(catalanArr[n-1])
+}
+
+findCatalan(6)
