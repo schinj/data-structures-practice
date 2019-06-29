@@ -1,0 +1,37 @@
+func buildUglyNumber(_ n: Int) {
+    var arr = Array(repeating: 0, count: n)
+    
+    arr[0] = 1
+    var i2 = 0
+    var i3 = 0
+    var i5 = 0
+    var nv2 = 2
+    var nv3 = 3
+    var nv5 = 5
+    
+    var nextUgly = 0
+    for i in 1..<n {
+        nextUgly = min(nv2, nv3, nv5)
+        arr[i] = nextUgly
+
+        if nextUgly == nv2 {
+            i2 += 1
+            nv2 = arr[i2] * 2
+        }
+        
+        if nextUgly == nv3 {
+            i3 += 1
+            nv3 = arr[i3] * 3
+        }
+        
+        if nextUgly == nv5 {
+            i5 += 1
+            nv5 = arr[i5] * 5
+        }
+        
+    }
+    
+    print(arr[n-1])
+}
+
+buildUglyNumber(150)
