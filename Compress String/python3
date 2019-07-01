@@ -1,0 +1,33 @@
+def compressString(s):
+	compressedString = ""
+	count = 0
+	if len(s) > 0:
+		lastChar = s[0]
+		compressedString = ""
+		count = 1
+		
+		for i in range(1, len(s)):
+			currentChar = s[i]
+			if currentChar == lastChar:
+				count += 1
+			else:
+				compressedString += lastChar
+				if count > 1:
+					compressedString += str(count)
+
+				count = 1
+				lastChar = currentChar
+				
+		compressedString += lastChar
+		if count > 1:
+			compressedString += str(count)
+		
+		if len(compressedString) >= len(s):
+			print(s)
+		else:
+			print(compressedString)
+				
+t = int(input())
+for itr in range(t):
+	inputString = str(input())
+	compressString(inputString)
